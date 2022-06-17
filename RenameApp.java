@@ -8,12 +8,16 @@ public class RenameApp {
     public void listFiles(String startDir) {
         File dir = new File(startDir);
         File[] files = dir.listFiles();
-        String searchString = "mp4";
+        // option  "mp4" or "mov"
+        String searchString = "mov";
         String prefix,file2Name;
         Boolean wasRenamed;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         DateTimeFormatter dtf_year = DateTimeFormatter.ofPattern("yyyy");
+
+        // this does not currently allow setting the date 
         LocalDate localDate = LocalDate.now();
+    
 
         if (files != null && files.length > 0) {
             for (File file : files) {
@@ -24,7 +28,7 @@ public class RenameApp {
                 } else if (file.getName().startsWith(dtf_year.format(localDate)) == false) {
                    // test that file type is .mp4 and does not already start with todays date
                     
-                    if (file.getName().endsWith(".mp4") == true)  {
+                    if (file.getName().endsWith(searchString) == true)  {
                         // define the new file name 
                         // ensure file stays in existing directory 
                         // add todays date as file prefix
@@ -38,7 +42,7 @@ public class RenameApp {
                         // System.out.println("Name: " + renamed.getName()); 
                         // System.out.println ("Absolute: " + renamed.getAbsoluteFile());
                     }  else { 
-                        System.out.println("was not mp4 extension " + LocalDate.now()); 
+                        System.out.println("was not " + searchString +" extension " + LocalDate.now()); 
                         // System.out.println (file.getPath());
                         // System.out.println(file.getName()); 
                        // System.out.println( "no match" );
@@ -47,7 +51,7 @@ public class RenameApp {
 
                 }else {  
                     // file is already starts with year 
-                    System.out.println("file started with year was skipped" + file.getName()) ;
+                    System.out.println("file started with year was skipped " + file.getName()) ;
                   }
                 }
             }
@@ -55,7 +59,8 @@ public class RenameApp {
 
     public static void main(String[] args) {
         RenameApp test = new RenameApp();
-        String startDir = ("F:\\DroneVideos_2020-2021");
+        // starting directory "D:\\DCIM" OR "F:\\DroneVideos_2020-2021"
+        String startDir = ("D:\\DCIM");
         test.listFiles(startDir);
     }
 }
